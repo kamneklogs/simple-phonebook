@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class DBConnection {
 
-    private boolean isConnected;
+    private Boolean isConnected;
 
     private String url;
 
@@ -12,6 +12,8 @@ public class DBConnection {
 
     public DBConnection(String url) {
         this.url = url;
+
+        isConnected = false;
     }
 
     public boolean isConnected() {
@@ -34,16 +36,19 @@ public class DBConnection {
 
         try {
 
-            
             Class.forName("oracle.jdbc.driver.OracleDriver");
 
-            connection = DriverManager.getConnection(url);
-            isConnected = connection.isValid(10);
+            String[] infoSesion = url.split(",");
 
+            connection = DriverManager.getConnection(infoSesion[0], infoSesion[1], infoSesion[2]);
+
+            isConnected = true;
 
         } catch (ClassNotFoundException e) {
             throw new Exception("Internat error");
         } catch (SQLException e) {
+
+            e.printStackTrace();
             throw new Exception("Error with the connection");
         }
 
@@ -53,7 +58,10 @@ public class DBConnection {
     public void disconnect() throws Exception {
 
         try {
+
+            if(connection != null)
             connection.close();
+            isConnected = false;
         } catch (SQLException e) {
             throw new Exception("Error with the connection");
         }
