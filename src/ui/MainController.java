@@ -1,6 +1,10 @@
 package ui;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -47,9 +51,27 @@ public class MainController {
 
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Text", "*.txt"));
 
-        File url = fileChooser.showOpenDialog(primaryStage);
+        File urlFile = fileChooser.showOpenDialog(primaryStage);
 
-        System.out.println(url.getAbsolutePath());
+        BufferedReader reader;
+        String url = null;
+
+        try {
+            reader = new BufferedReader(new FileReader(urlFile));
+
+            url = reader.readLine();
+
+            reader.close();
+
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        pb = new PhoneBook(url);
 
     }
 
