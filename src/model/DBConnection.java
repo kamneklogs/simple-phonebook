@@ -77,4 +77,13 @@ public class DBConnection {
     public void executeUpdate(String query) throws SQLException {
 
     }
+
+    public void verifyTable() throws SQLException {
+        // desc mytable
+
+        ResultSet resultSet = executeQuery("desc CONTACTS");
+
+        System.out.println(resultSet.toString());
+
+    }
 }

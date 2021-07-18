@@ -113,6 +113,15 @@ public class MainController {
             try {
                 Thread.sleep(3000);
 
+                for (double i = statusLabel.getOpacity(); i >= 0.0; i = i - 0.1) {
+                    try {
+                        Thread.sleep(30);
+                        statusLabel.setOpacity(i);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
                 statusLabel.setDisable(true);
                 statusLabel.setVisible(false);
 

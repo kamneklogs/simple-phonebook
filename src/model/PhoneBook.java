@@ -44,17 +44,21 @@ public class PhoneBook {
 
             resultSet.next();
 
-            do {
+            // checkAndConfigureDb();
 
+            while (resultSet.next()) {
+
+                System.out.println("Entró al while");
                 String name = resultSet.getString(1);
                 String number = resultSet.getString(2);
                 String address = resultSet.getString(3);
+                int isBestFriend = resultSet.getInt(4);
 
-                Contact contact = new Contact(name, number, address, true);
+                Contact contact = new Contact(name, number, address, isBestFriend == 0);
 
                 contacts.put(contact.getName(), contact);
 
-            } while (resultSet.next());
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -71,7 +75,9 @@ public class PhoneBook {
 
     }
 
-    public void checkAndConfigureDb() {
+    public void checkAndConfigureDb() throws SQLException {
+
+        connection.verifyTable();
 
     }
 }
