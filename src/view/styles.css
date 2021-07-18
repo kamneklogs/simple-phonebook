@@ -1,0 +1,21 @@
+.buttons {
+  -fx-background-color: #4b636e;
+  -fx-cursor: hand;
+}
+
+.leftPane {
+  -fx-background-color: #4b636e;
+}
+
+.mainPane {
+  -fx-background-color: #a7c0cd;
+}
+
+.miniPanes {
+  -fx-background-color: #437c9b;
+}
+
+.leftLabels {
+  -fx-font-size: 14;
+  -fx-font-weight: bold;
+}

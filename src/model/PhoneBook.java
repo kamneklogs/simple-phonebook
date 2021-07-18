@@ -17,7 +17,6 @@ public class PhoneBook {
         try {
             connection.connect();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -27,7 +26,6 @@ public class PhoneBook {
         try {
             connection.disconnect();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

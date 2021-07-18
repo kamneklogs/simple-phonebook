@@ -1,26 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-
-<FlowPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<FlowPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane fx:id="buttonsPane" prefHeight="402.0" prefWidth="152.0">
+      <Pane fx:id="buttonsPane" prefHeight="400.0" prefWidth="152.0" styleClass="leftPane">
          <children>
-            <Button layoutY="26.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="152.0" text="Button" />
-            <Button layoutY="78.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="152.0" text="Button" />
-            <Separator layoutX="148.0" layoutY="4.0" orientation="VERTICAL" prefHeight="392.0" prefWidth="7.0" />
+            <Pane fx:id="paneButtonNew" layoutX="12.0" layoutY="59.0" onMouseClicked="#newContact" prefHeight="35.0" prefWidth="140.0" styleClass="buttons">
+               <children>
+                  <Label layoutX="43.0" layoutY="10.0" styleClass="leftLabels" text="New" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane fx:id="paneButtonList" layoutX="12.0" layoutY="112.0" prefHeight="35.0" prefWidth="140.0" styleClass="buttons">
+               <children>
+                  <Label layoutX="43.0" layoutY="10.0" styleClass="leftLabels" text="List" textFill="WHITE" />
+               </children>
+            </Pane>
+            <Pane fx:id="paneButtonSearch" layoutX="12.0" layoutY="165.0" prefHeight="35.0" prefWidth="140.0" styleClass="buttons">
+               <children>
+                  <Label layoutX="43.0" layoutY="9.0" styleClass="leftLabels" text="Search" textFill="WHITE" />
+               </children>
+            </Pane>
+            <Pane layoutY="59.0" prefHeight="35.0" prefWidth="12.0" styleClass="miniPanes" />
+            <Pane layoutY="112.0" prefHeight="35.0" prefWidth="12.0" styleClass="miniPanes" />
+            <Pane layoutY="165.0" prefHeight="35.0" prefWidth="12.0" styleClass="miniPanes" />
          </children>
       </Pane>
-      <Pane prefHeight="402.0" prefWidth="448.0">
+      <Pane fx:id="mainLeftPane" prefHeight="400.0" prefWidth="448.0" styleClass="mainPane">
          <children>
-            <Label fx:id="statusLabel" layoutX="230.0" layoutY="372.0" text="Connecting to DDBB" />
+            <Label fx:id="statusLabel" layoutX="278.0" layoutY="375.0" text="Connecting to DDBB...">
+               <font>
+                  <Font name="System Bold Italic" size="13.0" />
+               </font></Label>
             <ImageView fx:id="loaderIco" fitHeight="150.0" fitWidth="200.0" layoutX="137.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@loadingIcon.png" />

@@ -1,7 +1,5 @@
 package ui;
 
-import model.PhoneBook;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,22 +7,21 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import javafx.application.Platform;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+import model.PhoneBook;
 
 public class MainController {
 
@@ -40,10 +37,22 @@ public class MainController {
     private ImageView loaderIco;
 
     @FXML
+    private Pane mainLeftPane;
+
+    @FXML
     private Pane buttonsPane;
 
     @FXML
     private Label statusLabel;
+
+    @FXML
+    private Pane paneButtonNew;
+
+    @FXML
+    private Pane paneButtonList;
+
+    @FXML
+    private Pane paneButtonSearch;
 
     public MainController(Stage primaryStage) {
 
@@ -106,7 +115,6 @@ public class MainController {
                 statusLabel.setVisible(false);
 
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 
@@ -123,7 +131,6 @@ public class MainController {
                 try {
                     Thread.sleep(30);
                 } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
 
@@ -139,7 +146,6 @@ public class MainController {
 
                     loaderIco.setRotate(loaderIco.getRotate() + 8);
                 } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
@@ -160,6 +166,81 @@ public class MainController {
                 primaryStage.close();
             }
         });
+
+        paneButtonNew.setOnMouseEntered(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent arg0) {
+                paneButtonNew.setStyle("-fx-background-color: #437c9b");
+            }
+
+        });
+
+        paneButtonNew.setOnMouseExited(new EventHandler<>() {
+
+            @Override
+            public void handle(MouseEvent arg0) {
+
+                paneButtonNew.setStyle("-fx-background-color: #4b636e");
+
+            }
+
+        });
+
+        paneButtonList.setOnMouseEntered(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent arg0) {
+                paneButtonList.setStyle("-fx-background-color: #437c9b");
+            }
+
+        });
+
+        paneButtonList.setOnMouseExited(new EventHandler<>() {
+
+            @Override
+            public void handle(MouseEvent arg0) {
+
+                paneButtonList.setStyle("-fx-background-color: #4b636e");
+
+            }
+
+        });
+
+        paneButtonSearch.setOnMouseEntered(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent arg0) {
+                paneButtonSearch.setStyle("-fx-background-color: #437c9b");
+            }
+
+        });
+
+        paneButtonSearch.setOnMouseExited(new EventHandler<>() {
+
+            @Override
+            public void handle(MouseEvent arg0) {
+
+                paneButtonSearch.setStyle("-fx-background-color: #4b636e");
+
+            }
+
+        });
+
+    }
+
+    @FXML
+    void newContact(MouseEvent event) throws IOException {
+
+        mainLeftPane.getChildren().clear();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/NewContactPane.fxml"));
+
+        loader.setController(new NewContactController());
+
+        Parent child = loader.load();
+
+        mainLeftPane.getChildren().add(child);
 
     }
 
