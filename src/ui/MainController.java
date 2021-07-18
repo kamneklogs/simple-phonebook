@@ -101,6 +101,8 @@ public class MainController {
         Thread thread = new Thread(() -> {
             pb.connect();
 
+            pb.loadDataFromDb();
+
             Platform.runLater(() -> {
 
                 statusLabel.setText("Connection successful");

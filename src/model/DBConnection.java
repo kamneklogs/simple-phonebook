@@ -59,12 +59,22 @@ public class DBConnection {
 
         try {
 
-            if(connection != null)
-            connection.close();
+            if (connection != null)
+                connection.close();
             isConnected = false;
         } catch (SQLException e) {
             throw new Exception("Error with the connection");
         }
+
+    }
+
+    public ResultSet executeQuery(String query) throws SQLException {
+        Statement statement = connection.createStatement();
+
+        return statement.executeQuery(query);
+    }
+
+    public void executeUpdate(String query) throws SQLException {
 
     }
 }
