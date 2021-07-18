@@ -49,6 +49,9 @@ public class MainController {
     private Pane paneButtonNew;
 
     @FXML
+    private ImageView phonebookIco;
+
+    @FXML
     private Pane paneButtonList;
 
     @FXML
@@ -101,6 +104,8 @@ public class MainController {
         Thread thread = new Thread(() -> {
             pb.connect();
 
+            System.out.println("Conectado");
+
             pb.loadDataFromDb();
 
             Platform.runLater(() -> {
@@ -145,9 +150,7 @@ public class MainController {
                     e.printStackTrace();
                 }
 
-                Platform.runLater(() -> {
-                    loaderIco.setRotate(loaderIco.getRotate() + 8);
-                });
+                loaderIco.setRotate(loaderIco.getRotate() + 8);
 
             }
             for (double i = loaderIco.getOpacity(); i >= 0.0; i = i - 0.1) {
@@ -160,6 +163,20 @@ public class MainController {
                     e.printStackTrace();
                 }
             }
+
+            phonebookIco.setVisible(true);
+
+            for (double i = 0; i <= 0.6; i = i + 0.01) {
+                try {
+                    Thread.sleep(30);
+
+                    phonebookIco.setOpacity(i);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
             loaderIco.setVisible(false);
         });
 

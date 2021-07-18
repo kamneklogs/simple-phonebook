@@ -7,14 +7,15 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<FlowPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<FlowPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="680.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane fx:id="buttonsPane" prefHeight="400.0" prefWidth="152.0" styleClass="leftPane">
+      <Pane fx:id="buttonsPane" prefHeight="450.0" prefWidth="150.0" styleClass="leftPane">
          <children>
             <Pane fx:id="paneButtonNew" layoutX="12.0" layoutY="59.0" onMouseClicked="#newContact" prefHeight="35.0" prefWidth="140.0" styleClass="buttons">
                <children>
-                  <Label layoutX="60.0" layoutY="10.0" styleClass="leftLabels" text="New" textFill="WHITE">
+                  <Label layoutX="60.0" layoutY="10.0" opacity="0.85" styleClass="leftLabels" text="New" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -31,7 +32,7 @@
             </Pane>
             <Pane fx:id="paneButtonList" layoutX="12.0" layoutY="112.0" prefHeight="35.0" prefWidth="140.0" styleClass="buttons">
                <children>
-                  <Label layoutX="60.0" layoutY="10.0" styleClass="leftLabels" text="List" textFill="WHITE" />
+                  <Label layoutX="60.0" layoutY="10.0" opacity="0.85" styleClass="leftLabels" text="List" textFill="WHITE" />
                   <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="20.0" layoutY="5.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" smooth="false">
                      <image>
                         <Image url="@list.png" />
@@ -44,7 +45,7 @@
             </Pane>
             <Pane fx:id="paneButtonSearch" layoutX="12.0" layoutY="165.0" prefHeight="35.0" prefWidth="140.0" styleClass="buttons">
                <children>
-                  <Label layoutX="60.0" layoutY="9.0" styleClass="leftLabels" text="Search" textFill="WHITE" />
+                  <Label layoutX="60.0" layoutY="9.0" opacity="0.85" styleClass="leftLabels" text="Search" textFill="WHITE" />
                   <ImageView fitHeight="30.0" fitWidth="25.0" layoutX="20.0" layoutY="5.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" smooth="false">
                      <image>
                         <Image url="@search.png" />
@@ -60,13 +61,27 @@
             <Pane layoutY="165.0" prefHeight="35.0" prefWidth="12.0" styleClass="miniPanes" />
          </children>
       </Pane>
-      <Pane fx:id="mainLeftPane" prefHeight="400.0" prefWidth="448.0" styleClass="mainPane">
+      <Pane fx:id="mainLeftPane" prefHeight="450.0" prefWidth="530.0" styleClass="mainPane">
          <children>
-            <Label fx:id="statusLabel" layoutX="278.0" layoutY="375.0" text="Connecting to DDBB...">
+            <Pane prefHeight="450.0" prefWidth="530.0">
+               <children>
+                  <Text layoutX="78.0" layoutY="104.0" opacity="0.75" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to Simple Phonebook :)">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <ImageView fx:id="phonebookIco" fitHeight="150.0" fitWidth="200.0" layoutX="190.0" layoutY="150.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="-45.0" visible="false">
+                     <image>
+                        <Image url="@phonebook.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Label fx:id="statusLabel" layoutX="352.0" layoutY="420.0" text="Connecting to DDBB...">
                <font>
                   <Font name="System Bold Italic" size="13.0" />
                </font></Label>
-            <ImageView fx:id="loaderIco" fitHeight="150.0" fitWidth="200.0" layoutX="137.0" layoutY="105.0" opacity="0.6" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="loaderIco" fitHeight="150.0" fitWidth="200.0" layoutX="190.0" layoutY="150.0" opacity="0.6" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@loading-process.png" />
                </image>
