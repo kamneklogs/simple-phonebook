@@ -74,7 +74,20 @@ public class DBConnection {
         return statement.executeQuery(query);
     }
 
-    public void executeUpdate(String query) throws SQLException {
+    public void executeUpdate(String[] strings) throws SQLException {
+
+        // INSERT INTO DEPARTMENT
+        // VALUES ('DEP004', 'D. Administrativo', null);
+
+        String query = "INSERT INTO CONTACTS VALUES (?,?,?,?)";
+        PreparedStatement statement = connection.prepareStatement(query);
+
+        statement.setString(1, strings[0]);
+        statement.setString(2, strings[1]);
+        statement.setString(3, strings[2]);
+        statement.setInt(4, Integer.parseInt(strings[3]));
+
+        statement.executeUpdate();
 
     }
 

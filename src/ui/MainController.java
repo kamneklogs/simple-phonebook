@@ -264,7 +264,7 @@ public class MainController {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/NewContactPane.fxml"));
 
-        loader.setController(new NewContactController());
+        loader.setController(new NewContactController(pb));
 
         Parent child = loader.load();
 

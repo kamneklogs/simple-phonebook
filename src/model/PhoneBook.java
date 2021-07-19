@@ -80,4 +80,44 @@ public class PhoneBook {
         connection.verifyTable();
 
     }
+
+    public void saveNewContact(String name, String phoneNumber, String address, int isBestFriend) throws SQLException {
+
+        Contact newContact = new Contact(name, phoneNumber, address, isBestFriend == 0);
+
+       
+
+        connection.executeUpdate(new String[] { name, phoneNumber, address, isBestFriend + "" });
+
+        contacts.put(name, newContact);
+
+    }
+
+    public void test() {
+        ResultSet resultSet;
+        try {
+            resultSet = connection.executeQuery("SELECT * FROM CONTACTS");
+
+            resultSet.next();
+
+            // checkAndConfigureDb();
+
+            while (resultSet.next()) {
+
+                System.out.println("Entró al while");
+                String name = resultSet.getString(1);
+                String number = resultSet.getString(2);
+                String address = resultSet.getString(3);
+                int isBestFriend = resultSet.getInt(4);
+
+                Contact contact = new Contact(name, number, address, isBestFriend == 0);
+
+                System.out.println(contact.toString());
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

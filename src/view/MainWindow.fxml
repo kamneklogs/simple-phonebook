@@ -70,7 +70,7 @@
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Text>
-                  <ImageView fx:id="phonebookIco" fitHeight="150.0" fitWidth="200.0" layoutX="190.0" layoutY="150.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="-45.0" visible="false">
+                  <ImageView fx:id="phonebookIco" fitHeight="150.0" fitWidth="200.0" layoutX="190.0" layoutY="200.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="-45.0" visible="false">
                      <image>
                         <Image url="@phonebook.png" />
                      </image>
