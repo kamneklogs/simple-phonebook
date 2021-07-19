@@ -64,6 +64,9 @@ public class MainController {
 
     public void initialize() throws IOException {
 
+        phonebookIco.setOpacity(0.0);
+
+        phonebookIco.setVisible(false);
         buttonsPane.setDisable(true);
 
         FileChooser fileChooser = new FileChooser();
@@ -105,8 +108,6 @@ public class MainController {
             pb.connect();
 
             System.out.println("Conectado");
-
-            pb.loadDataFromDb();
 
             Platform.runLater(() -> {
 
@@ -254,7 +255,6 @@ public class MainController {
             }
 
         });
-
     }
 
     @FXML
@@ -270,6 +270,31 @@ public class MainController {
 
         mainLeftPane.getChildren().add(child);
 
+    }
+
+    @FXML
+    void viewList(MouseEvent event) throws IOException {
+
+        mainLeftPane.getChildren().clear();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ViewListPane.fxml"));
+
+        loader.setController(new ViewListController(pb));
+
+        Parent child = loader.load();
+
+        mainLeftPane.getChildren().add(child);
+    }
+
+    @FXML
+    void backToHome(MouseEvent event) throws IOException {
+        mainLeftPane.getChildren().clear();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/WelcomePane.fxml"));
+
+        Parent child = loader.load();
+
+        mainLeftPane.getChildren().add(child);
     }
 
 }

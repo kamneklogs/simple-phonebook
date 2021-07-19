@@ -38,56 +38,52 @@ public class NewContactController {
     void saveNewContact(ActionEvent event) {
         try {
 
-            System.out.println(nameNewContact.getText());
-            System.out.println(phoneNumberNewContact.getText());
-            System.out.println(addressNewContact.getText());
+            if (!pb.contactExists(nameNewContact.getText())) {
+                RadioButton selectedRadioButton = (RadioButton) bestFriendRBs.getSelectedToggle();
+                int isBestFriend = selectedRadioButton.getText().equals("Yes") ? 1 : 0;
 
-            System.out.println(pb);
+                pb.saveNewContact(nameNewContact.getText(), phoneNumberNewContact.getText(),
+                        addressNewContact.getText(), isBestFriend);
 
-            RadioButton selectedRadioButton = (RadioButton) bestFriendRBs.getSelectedToggle();
-            int isBestFriend = selectedRadioButton.getText().equals("Yes") ? 1 : 0;
+                statusNewContact.setText("Contact saved!");
 
-            pb.saveNewContact(nameNewContact.getText(), phoneNumberNewContact.getText(), addressNewContact.getText(),
-                    isBestFriend);
+                statusNewContact.setOpacity(1.0);
 
-            pb.test();
+                statusNewContact.setTextFill(Color.GREEN);
 
-            statusNewContact.setText("Contact saved!");
+                statusNewContact.setVisible(true);
 
-            statusNewContact.setOpacity(1.0);
+                Thread thread = new Thread(() -> {
 
-            statusNewContact.setTextFill(Color.GREEN);
-
-            statusNewContact.setVisible(true);
-
-            Thread thread = new Thread(() -> {
-
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                for (double i = 1; i >= 0; i = i - 0.01)
                     try {
-                        Thread.sleep(30);
-                        statusNewContact.setOpacity(i);
-
-                    } catch (InterruptedException e1) {
-                        e1.printStackTrace();
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
 
-                statusNewContact.setVisible(false);
+                    for (double i = 1; i >= 0; i = i - 0.01)
+                        try {
+                            Thread.sleep(30);
+                            statusNewContact.setOpacity(i);
 
-                statusNewContact.setTextFill(Color.BLACK);
+                        } catch (InterruptedException e1) {
+                            e1.printStackTrace();
+                        }
 
-            });
+                    statusNewContact.setVisible(false);
 
-            thread.setDaemon(true);
+                    statusNewContact.setTextFill(Color.BLACK);
 
-            clearForm();
+                });
 
-            thread.start();
+                thread.setDaemon(true);
+
+                clearForm();
+
+                thread.start();
+            } else {
+                throw new Exception();
+            }
 
         } catch (SQLException e) {
 
@@ -120,6 +116,36 @@ public class NewContactController {
 
             thread.start();
             e.printStackTrace();
+        } catch (Exception e) {
+
+            Thread thread = new Thread(() -> {
+
+                statusNewContact.setVisible(true);
+                statusNewContact.setOpacity(1.0);
+                try {
+                    Thread.sleep(3000);
+
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+
+                for (double i = 1; i >= 0; i = i - 0.01)
+                    try {
+                        Thread.sleep(30);
+                        statusNewContact.setOpacity(i);
+
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+
+                statusNewContact.setVisible(false);
+
+            });
+
+            thread.setDaemon(true);
+            statusNewContact.setText("Contact already exists");
+
+            thread.start();
         }
     }
 

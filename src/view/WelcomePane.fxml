@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane prefHeight="450.0" prefWidth="530.0" styleClass="mainPane" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text layoutX="78.0" layoutY="104.0" opacity="0.75" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to Simple Phonebook :)">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Text>
+      <ImageView fx:id="phonebookIco" fitHeight="150.0" fitWidth="200.0" layoutX="190.0" layoutY="200.0" opacity="0.6" pickOnBounds="true" preserveRatio="true" rotate="-45.0">
+         <image>
+            <Image url="@phonebook.png" />
+         </image>
+      </ImageView>
+   </children>
+</Pane>

@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DBConnection {
 
@@ -9,6 +10,10 @@ public class DBConnection {
     private String url;
 
     private Connection connection;
+
+    private static final String[] queryExists = new String[] {
+            "select case when exists (select 1 from CONTACTS where name = '",
+            "') then 'Y' else 'N' end as rec_exists from dual" };
 
     public DBConnection(String url) {
         this.url = url;
@@ -76,9 +81,6 @@ public class DBConnection {
 
     public void executeUpdate(String[] strings) throws SQLException {
 
-        // INSERT INTO DEPARTMENT
-        // VALUES ('DEP004', 'D. Administrativo', null);
-
         String query = "INSERT INTO CONTACTS VALUES (?,?,?,?)";
         PreparedStatement statement = connection.prepareStatement(query);
 
@@ -98,5 +100,32 @@ public class DBConnection {
 
         System.out.println(resultSet.toString());
 
+    }
+
+    public boolean recordExists(String name) throws SQLException {
+
+        Statement statement = connection.createStatement();
+
+        ResultSet resultSet = statement.executeQuery(queryExists[0] + name + queryExists[1]);
+
+        resultSet.next();
+
+        return resultSet.getString(1).equals("Y");
+    }
+
+    public ArrayList<String> getAllKeyRecords() throws SQLException {
+
+        ArrayList<String> keys = new ArrayList<String>();
+
+        Statement statement = connection.createStatement();
+
+        ResultSet resultSet = statement.executeQuery("SELECT NAME FROM CONTACTS");
+
+        while (resultSet.next()) {
+
+            keys.add(resultSet.getString(1));
+        }
+
+        return keys;
     }
 }
