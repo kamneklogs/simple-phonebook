@@ -1,0 +1,36 @@
+.buttons {
+  -fx-background-color: rgba(75, 99, 110, 0.801);
+  -fx-cursor: hand;
+}
+
+.leftPane {
+  -fx-background-color: #4b636e;
+}
+
+.mainPane {
+  -fx-background-color: #a7c0cd;
+}
+
+.miniPanes {
+  -fx-background-color: #437c9b;
+}
+
+.leftLabels {
+  -fx-font-size: 14;
+  -fx-font-weight: bold;
+}
+
+.textBox {
+  -fx-background-radius: 0;
+
+  -fx-border-weight: 0;
+}
+
+.labels {
+  -fx-font-size: 14;
+  
+}
+
+.radioButons {
+  -fx-font-size: 14;
+}

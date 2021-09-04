@@ -1,33 +1,73 @@
 package ui;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import model.*;
+import javafx.stage.WindowEvent;
+import model.PhoneBook;
 
 public class MainController {
 
     private PhoneBook pb;
 
     @FXML
-    private Pane mainPane;
-
     private Stage primaryStage;
+
+    @FXML
+    private FlowPane mainPane;
+
+    @FXML
+    private ImageView loaderIco;
+
+    @FXML
+    private Pane mainLeftPane;
+
+    @FXML
+    private Pane buttonsPane;
+
+    @FXML
+    private Label statusLabel;
+
+    @FXML
+    private Pane paneButtonNew;
+
+    @FXML
+    private ImageView phonebookIco;
+
+    @FXML
+    private Pane paneButtonList;
+
+    @FXML
+    private Pane paneButtonSearch;
 
     public MainController(Stage primaryStage) {
 
         this.primaryStage = primaryStage;
     }
 
-    public void initialize() {
+    public void initialize() throws IOException {
 
-        mainPane.setDisable(true);
+        phonebookIco.setOpacity(0.0);
+
+        phonebookIco.setVisible(false);
+        buttonsPane.setDisable(true);
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
@@ -36,21 +76,225 @@ public class MainController {
 
         alert.setHeaderText(null);
 
-        // "jdbc:oracle:thin:@200.3.193.24:1522:ESTUD", "P09551_2_6",
-        // "P09551_2_6_20211"
-
         alert.setContentText(
-                "Select the url string to connect to the server\n\nFormat:\n\"jdbc:oracle:thin:@IP:SERVNAME\",\"USER\",\"PASS\"");
+                "Select the url string to connect to the server\n\nFormat:\njdbc:oracle:thin:@IP:SERVNAME,USER,PASS");
 
         alert.showAndWait();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Text", "*.txt"));
 
-        File url = fileChooser.showOpenDialog(primaryStage);
+        File urlFile = fileChooser.showOpenDialog(primaryStage);
 
-        System.out.println(url.getAbsolutePath());
+        BufferedReader reader;
+        String url = null;
 
+        try {
+            reader = new BufferedReader(new FileReader(urlFile));
+
+            url = reader.readLine();
+
+            reader.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        pb = new PhoneBook(url);
+
+        Thread thread = new Thread(() -> {
+            pb.connect();
+
+            System.out.println("Conectado");
+
+            Platform.runLater(() -> {
+
+                statusLabel.setText("Connection successful");
+
+                buttonsPane.setDisable(false);
+            });
+
+            try {
+                Thread.sleep(3000);
+
+                for (double i = statusLabel.getOpacity(); i >= 0.0; i = i - 0.1) {
+                    try {
+                        Thread.sleep(30);
+                        statusLabel.setOpacity(i);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                statusLabel.setDisable(true);
+                statusLabel.setVisible(false);
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        });
+
+        thread.setDaemon(true);
+
+        thread.start();
+
+        Thread threadToAnimate = new Thread(() -> {
+
+            while (pb.isConnected() == false) {
+
+                try {
+                    Thread.sleep(30);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                loaderIco.setRotate(loaderIco.getRotate() + 8);
+
+            }
+            for (double i = loaderIco.getOpacity(); i >= 0.0; i = i - 0.1) {
+                try {
+                    Thread.sleep(30);
+                    loaderIco.setOpacity(i);
+
+                    loaderIco.setRotate(loaderIco.getRotate() + 8);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            phonebookIco.setVisible(true);
+
+            for (double i = 0; i <= 0.6; i = i + 0.01) {
+                try {
+                    Thread.sleep(30);
+
+                    phonebookIco.setOpacity(i);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            loaderIco.setVisible(false);
+        });
+
+        threadToAnimate.setDaemon(true);
+
+        threadToAnimate.start();
+
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+
+            @Override
+            public void handle(WindowEvent arg0) {
+                pb.disconnect();
+
+                System.out.println("Desconectado");
+                primaryStage.close();
+            }
+        });
+
+        paneButtonNew.setOnMouseEntered(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent arg0) {
+                paneButtonNew.setStyle("-fx-background-color: #437c9b");
+            }
+
+        });
+
+        paneButtonNew.setOnMouseExited(new EventHandler<>() {
+
+            @Override
+            public void handle(MouseEvent arg0) {
+
+                paneButtonNew.setStyle("-fx-background-color: #4b636e");
+
+            }
+
+        });
+
+        paneButtonList.setOnMouseEntered(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent arg0) {
+                paneButtonList.setStyle("-fx-background-color: #437c9b");
+            }
+
+        });
+
+        paneButtonList.setOnMouseExited(new EventHandler<>() {
+
+            @Override
+            public void handle(MouseEvent arg0) {
+
+                paneButtonList.setStyle("-fx-background-color: #4b636e");
+
+            }
+
+        });
+
+        paneButtonSearch.setOnMouseEntered(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent arg0) {
+                paneButtonSearch.setStyle("-fx-background-color: #437c9b");
+            }
+
+        });
+
+        paneButtonSearch.setOnMouseExited(new EventHandler<>() {
+
+            @Override
+            public void handle(MouseEvent arg0) {
+
+                paneButtonSearch.setStyle("-fx-background-color: #4b636e");
+
+            }
+
+        });
+    }
+
+    @FXML
+    void newContact(MouseEvent event) throws IOException {
+
+        mainLeftPane.getChildren().clear();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/NewContactPane.fxml"));
+
+        loader.setController(new NewContactController(pb));
+
+        Parent child = loader.load();
+
+        mainLeftPane.getChildren().add(child);
+
+    }
+
+    @FXML
+    void viewList(MouseEvent event) throws IOException {
+
+        mainLeftPane.getChildren().clear();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ViewListPane.fxml"));
+
+        loader.setController(new ViewListController(pb));
+
+        Parent child = loader.load();
+
+        mainLeftPane.getChildren().add(child);
+    }
+
+    @FXML
+    void backToHome(MouseEvent event) throws IOException {
+        mainLeftPane.getChildren().clear();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/WelcomePane.fxml"));
+
+        Parent child = loader.load();
+
+        mainLeftPane.getChildren().add(child);
     }
 
 }

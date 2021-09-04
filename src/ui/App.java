@@ -3,13 +3,13 @@ package ui;
 import java.io.IOException;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.fxml.FXMLLoader;
-import model.*;
 import javafx.stage.Stage;
 
 public class App extends Application {
+
     public static void main(String[] args) {
         launch(args);
 
@@ -17,6 +17,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
+
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/MainWindow.fxml"));
 
         fxmlLoader.setController(new MainController(primaryStage));
@@ -29,7 +30,10 @@ public class App extends Application {
 
         primaryStage.setResizable(false);
 
+        primaryStage.setTitle("Simple phonebook :)");
+
         primaryStage.show();
 
     }
+
 }

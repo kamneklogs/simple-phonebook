@@ -26,6 +26,12 @@ public class Contact {
         return number;
     }
 
+    @Override
+    public String toString() {
+        return "Contact [address=" + address + ", isBestFriend=" + isBestFriend + ", name=" + name + ", number="
+                + number + "]";
+    }
+
     public void setNumber(String number) {
         this.number = number;
     }
